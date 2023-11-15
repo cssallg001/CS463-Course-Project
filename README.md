@@ -29,10 +29,10 @@ IV = A9
 > 3) Output Feedback Mode (CFB)    
 >>> * Prompt user for hex values  
 >>>>> * Output Result of CFB  
-> * 4) Counter Mode (CTR)  
+> 4) Counter Mode (CTR)  
 >>> * Prompt user for hex values  
 >>>>> * Output Result of CTR  
-> * 5) Counter Mode (GCM)  
+> 5) Counter Mode (GCM)  
 >> * Prompt user for hex values  
 >>>>> * Output Result of GCM  
 > * “Continue? [Y / N]”  
