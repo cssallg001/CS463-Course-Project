@@ -1,4 +1,4 @@
-# CS463-Semester_Project
+# CS463-Semester-Project
 
 CS 463		Project Proposal		Sean Allgaier
 Project Choice: Option #2 - Programming Project  
