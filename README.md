@@ -1,11 +1,11 @@
 # CS463-Course-Project
 
 ## Info
-Title: Course Project  
-By: Sean Allgaier  
-Course: CS 463  
-Semester: Fall 2023  
-Profesor: Dr. Charles Cartledge  
+> Title: Course Project  
+> By: Sean Allgaier  
+> Course: CS 463  
+> Semester: Fall 2023  
+> Profesor: Dr. Charles Cartledge  
 
 ## Description 
 ### Project Proposal:
