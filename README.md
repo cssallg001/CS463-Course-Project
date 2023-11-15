@@ -20,19 +20,19 @@ IV = A9
 
 
 > “Pick a number:”  
-> * 1. Electronic Code Book (ECB)  
->> * Prompt user for hex values  
->>> * Output Result of ECB  
-> * 2. Cipher Block Chaining Mode (CBC)  
->>  * Prompt user for hex values  
->>> * Output Result of CBC  
+> * 1) Electronic Code Book (ECB)  
+>>> * Prompt user for hex values  
+>>>>> * Output Result of ECB  
+> * 2) Cipher Block Chaining Mode (CBC)  
+>>>  * Prompt user for hex values  
+>>>> * Output Result of CBC  
 > * 3) Output Feedback Mode (CFB)    
->> * Prompt user for hex values  
->>> * Output Result of CFB  
+>>> * Prompt user for hex values  
+>>>>> * Output Result of CFB  
 > * 4) Counter Mode (CTR)  
->> * Prompt user for hex values  
->>> * Output Result of CTR  
+>>> * Prompt user for hex values  
+>>>>> * Output Result of CTR  
 > * 5) Counter Mode (GCM)  
 >> * Prompt user for hex values  
->>> * Output Result of GCM  
+>>>>> * Output Result of GCM  
 > * “Continue? [Y / N]”  
