@@ -14,6 +14,8 @@ IV = A9
 (Note: Haven’t decided yet whether or not these two sets of hex values will remain static or if the user will be prompted to input the values instead.)  
 
 > CLI Menu Tree:  
+
+
 > “Pick a number: ”  
 > * 1) Electronic Code Book (ECB)  
 >> * Prompt user for hex values  
