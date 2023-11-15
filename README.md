@@ -15,19 +15,19 @@ IV = A9
 
 > CLI Menu Tree:  
 > “Pick a number: ”  
-> * Electronic Code Book (ECB)  
+> * 1 - Electronic Code Book (ECB)  
 >> * Prompt user for hex values  
 >>> * Output Result of ECB  
-> * Cipher Block Chaining Mode (CBC)  
+> * 2 - Cipher Block Chaining Mode (CBC)  
 >>  * Prompt user for hex values  
 >>> * Output Result of CBC  
-> * Output Feedback Mode (CFB)    
+> * 3 - Output Feedback Mode (CFB)    
 * Prompt user for hex values  
 * Output Result of CFB  
-* 4 Counter Mode (CTR)  
+* 4 - Counter Mode (CTR)  
 	* Prompt user for hex values  
 * Output Result of CTR  
-* 5 alois Counter Mode (GCM)  
+* 5 - Counter Mode (GCM)  
 * Prompt user for hex values  
 * Output Result of GCM  
 * “Continue? [Y / N]”  
