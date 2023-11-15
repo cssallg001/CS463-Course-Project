@@ -16,7 +16,7 @@ CLI Menu Tree:
 “Pick a number: ”  
 > 1) Electronic Code Book (ECB)  
 >> Prompt user for hex values  
-		• Output Result of ECB  
+>>> • Output Result of ECB  
 • 2) Cipher Block Chaining Mode (CBC)  
 	• Prompt user for hex values  
 		• Output Result of CBC  
