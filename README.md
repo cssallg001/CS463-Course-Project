@@ -1,4 +1,4 @@
-# CS463-Semester-Project
+# CS463-Course-Project
 
 ## Info
 Title: Course Project  
