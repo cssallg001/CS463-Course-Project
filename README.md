@@ -17,9 +17,9 @@ CLI Menu Tree:
 > 1) Electronic Code Book (ECB)  
 >> Prompt user for hex values  
 >>> • Output Result of ECB  
-• 2) Cipher Block Chaining Mode (CBC)  
-	• Prompt user for hex values  
-		• Output Result of CBC  
+> 2) Cipher Block Chaining Mode (CBC)  
+>>  • Prompt user for hex values  
+>>> • Output Result of CBC  
 • 3) Output Feedback Mode (CFB)   	
 • Prompt user for hex values  
 • Output Result of CFB  
