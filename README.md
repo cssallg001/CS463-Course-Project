@@ -13,20 +13,20 @@ IV = A9
 8-bit key = C5
 (Note: Haven’t decided yet whether or not these two sets of hex values will remain static or if the user will be prompted to input the values instead.)
 CLI Menu Tree:
-“Pick a number: ”
-• 1) Electronic Code Book (ECB)
-	• Prompt user for hex values
-		• Output Result of ECB
-• 2) Cipher Block Chaining Mode (CBC)
-	• Prompt user for hex values
-		• Output Result of CBC
-• 3) Output Feedback Mode (CFB) 	
-• Prompt user for hex values
-• Output Result of CFB
-• 4) Counter Mode (CTR)
-	• Prompt user for hex values
-• Output Result of CTR
-• 5) Galois Counter Mode (GCM)
-• Prompt user for hex values
-• Output Result of GCM
-	“Continue? [Y / N]”
+“Pick a number: ”  
+• 1) Electronic Code Book (ECB)  
+	• Prompt user for hex values  
+		• Output Result of ECB  
+• 2) Cipher Block Chaining Mode (CBC)  
+	• Prompt user for hex values  
+		• Output Result of CBC  
+• 3) Output Feedback Mode (CFB)   	
+• Prompt user for hex values  
+• Output Result of CFB  
+• 4) Counter Mode (CTR)  
+	• Prompt user for hex values  
+• Output Result of CTR  
+• 5) Galois Counter Mode (GCM)  
+• Prompt user for hex values  
+• Output Result of GCM  
+	“Continue? [Y / N]”  
