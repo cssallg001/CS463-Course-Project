@@ -14,8 +14,8 @@ IV = A9
 (Note: Haven’t decided yet whether or not these two sets of hex values will remain static or if the user will be prompted to input the values instead.)
 CLI Menu Tree:
 “Pick a number: ”  
-• 1) Electronic Code Book (ECB)  
-	• Prompt user for hex values  
+> 1) Electronic Code Book (ECB)  
+	>> Prompt user for hex values  
 		• Output Result of ECB  
 • 2) Cipher Block Chaining Mode (CBC)  
 	• Prompt user for hex values  
