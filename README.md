@@ -16,7 +16,7 @@ IV = A9
 8-bit key = C5  
 (Note: Haven’t decided yet whether or not these two sets of hex values will remain static or if the user will be prompted to input the values instead.)  
 
-> CLI Menu Tree:  
+## CLI Menu Tree:  
 
 
 > “Pick a number:”  
