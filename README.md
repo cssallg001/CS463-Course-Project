@@ -28,13 +28,13 @@
 > 2) Cipher Block Chaining Mode (CBC)  
 >>>  * Prompt user for hex values  
 >>>> * Output Result of CBC  
-> 3) Output Feedback Mode (CFB)    
->>> * Prompt user for hex values  
->>>>> * Output Result of CFB  
-> 4) Counter Mode (CTR)  
->>> * Prompt user for hex values  
->>>>> * Output Result of CTR  
-> 5) Counter Mode (GCM)  
+> 3) Output Feedback Mode (OFB) 
 >> * Prompt user for hex values  
 >>>>> * Output Result of GCM  
+> 4) Cipher Feedback Mode (CFB) 	   
+>>> * Prompt user for hex values  
+>>>>> * Output Result of CFB  
+> 5) Counter Mode (CTR)  
+>>> * Prompt user for hex values  
+>>>>> * Output Result of CTR  
 > * “Continue? [Y / N]”  
