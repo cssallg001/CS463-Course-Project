@@ -43,28 +43,26 @@ void inputErrorMessage(int errorType)
 {
     std::string errorTypeMessage;
 
-
     if (errorType == 0)
     {
-        errorTypeMessage = "menu option";
+        errorTypeMessage = "Invalid menu option";
     }
     else if (errorType == 1)
     {
-        errorTypeMessage = "hex value";
+        errorTypeMessage = "Invalid hex value(s)";
     }
     else if (errorType == 2)
     {
-        errorTypeMessage = "erroTypeMessage3";          // Note: Update as more error types are figured out
+        errorTypeMessage = "Invalid number of hex values";
     }
     else if (errorType == 3)
     {
-        errorTypeMessage = "erroTypeMessage4";          // Note: Update as more error types are figured out
+        errorTypeMessage = "errorTypeMessage4";          // Note: Update as more error types are figured out
     }
-
 
     std::cin.clear();                                                   // Clears user input
     std::cin.ignore(256, '\n'); 
-    std::cout << "Error: Invalid \'" << errorTypeMessage << "\', please try again." << std::endl << std::endl;      
+    std::cout << std::endl << "ERROR: " << errorTypeMessage << ", please try again." << std::endl;      
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -185,7 +183,7 @@ void menu()
             inputErrorMessage(0);                                                    // Outputs error message                                        
             goto userInput;
         }
-        std::cout << std::endl << std::endl << "---------------------------------------------------" << std::endl << std::endl;
+        std::cout << std::endl << "###################################################" << std::endl;
     }
 
     
@@ -362,13 +360,13 @@ std::string hexChoice()
     }
     else 
     {
-        inputErrorMessage(1);                                                            // Outputs error message                                        
+        inputErrorMessage(2);                                                            // Outputs error message                                        
         goto hexValueJumpPoint;
     }
 
     //std:: cout << std::endl << "16-bit input: " << std::endl;
 
-    std::cout << std::endl << std::endl;
+    //std::cout << std::endl;
 
     return hexValue;
 }
