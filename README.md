@@ -7,6 +7,9 @@
 > Semester: Fall 2023  
 > Professor: Dr. Charles Cartledge  
 
+## Instructions
+[Click here to view instructions](instructions.md)
+
 ## Description 
 ### Project Proposal:
 
@@ -49,5 +52,3 @@
 
 ### 6. Exit
 
-## Instructions
-[Click here to view instructions](instructions.md)

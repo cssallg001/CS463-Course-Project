@@ -1,13 +1,13 @@
 # Instructions:
  
-## 1. Open a unix terminal on your machine and run the command  
+## 1. Open a Linux/Unix terminal on your machine and run the command  
 `git clone https://github.com/cssallg001/CS463-Course-Project.git`
 - This will cause the repository to be cloned to the current directory of your local machine. 
 
 ## 2. Use the 'cd' command to change your directory to inside of the cloned repository
 `cd CS463-Course-Project/`
 
-## 3. Verify that 'make' is installed and properly up to date within your Unix distro. 
+## 3. Verify that 'make' is installed and properly up to date within your Linux/Unix distro. 
 - If 'make' is not yet installed your Unix distro, you can simply run this command   
 `sudo apt update; sudo apt upgrade -y; sudo apt install make`
 

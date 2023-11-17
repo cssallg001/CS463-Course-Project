@@ -25,8 +25,8 @@ std::string CBC(std::string hexInput);
 std::string OFB(std::string hexInput);
 std::string CFB(std::string hexInput);
 std::string CTR(std::string hexInput);
-std::string hexChoice();
 std::string XOR(std::string value1, std::string value2);
+std::string hexChoice();
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
