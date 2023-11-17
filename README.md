@@ -25,17 +25,22 @@
 ### 1. Electronic Code Book (ECB)  
 - Prompt user for hex values  
 - Output Result of ECB  
+- “Continue? [Y / N]”  
 
 ### 2. Cipher Block Chaining Mode (CBC)  
 - Prompt user for hex values  
 - Output Result of CBC  
+- “Continue? [Y / N]”  
 
 ### 3. Output Feedback Mode (OFB) 
 - Prompt user for hex values  
+- Output Result of OFB     
+- “Continue? [Y / N]”  
 
 ### 4. Cipher Feedback Mode (CFB) 	   
 - Prompt user for hex values  
 - Output Result of CFB  
+- “Continue? [Y / N]”  
 
 ### 5. Counter Mode (CTR)  
 - Prompt user for hex values  
