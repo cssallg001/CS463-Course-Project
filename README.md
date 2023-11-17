@@ -39,5 +39,4 @@
 >>>>> * Output Result of CTR  
 > * “Continue? [Y / N]”  
 
-## Instructions
-[Instructions](instructions.md)
+## [Click here to view the instructions to run this code](instructions.md)
