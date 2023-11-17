@@ -40,4 +40,4 @@
 > * “Continue? [Y / N]”  
 
 ## Instructions
-[Click here to view the instructions to run this code](instructions.md)
+[Click here to view instructions](instructions.md)
