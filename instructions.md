@@ -8,8 +8,9 @@
 `cd CS463-Course-Project/`
 
 ## 3. Verify that 'make' is installed and properly up to date within your unix distro. 
-- If 'make' is not installed your Unix distro, you can simply run this command   
+- If 'make' is not yet installed your Unix distro, you can simply run this command   
 `sudo apt update; sudo apt upgrade -y; sudo apt install make`
+- This will update your Unix distro and then install 'make'.
 
 
 ## 3. Run the makefile command
