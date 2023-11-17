@@ -10,23 +10,25 @@
 #include <sstream>
 #include <cstring>
 #include <cmath>
+#include <vector>
 
 // using namespace std;
 
 // Declaring functions
 void menu();
+bool continueMenu();
+bool boolWorkChoice();
 void inputErrorMessage(int errorChoice);
-bool verifyInput(std::string input, std::string inputType);
-std::string hexBinaryConvert(std::string value, bool hexBinaryOption);
-std::string binaryToHex(std::string binaryValue);
-std::string hexToBinary(std::string hexValue);
-std::string ECB(std::string hexInput);
-std::string CBC(std::string hexInput);
-std::string OFB(std::string hexInput);
-std::string CFB(std::string hexInput);
-std::string CTR(std::string hexInput);
-std::string XOR(std::string value1, std::string value2);
+void showWork(std::string blockCipherType);
 std::string hexChoice();
+std::string binary2Hex(std::string binaryString);
+std::string hex2Binary(std::string hexString);
+std::string XOR(std::string value1, std::string value2);
+std::string ECB(std::string hexInput, std::string hexKey, std::string IV);
+std::string CBC(std::string hexInput, std::string hexKey, std::string IV);
+std::string OFB(std::string hexInput, std::string hexKey, std::string IV);
+std::string CFB(std::string hexInput, std::string hexKey, std::string IV);
+std::string CTR(std::string hexInput, std::string hexKey, std::string IV);
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -113,14 +115,14 @@ void menu()
         std::cout << "Pick an option: ";
         std::cin >> blockCipherChoice;
 
-        // Loops through each character of "blockCipherChoice" to make sure that the std::string is completely capatilized 
+        // Loops through each character of "blockCipherChoice" to make sure that the string is capatilized 
         for (int i = 0; i < blockCipherChoice.size(); i++)
         {
             if (!isdigit(blockCipherChoice[i]))
                 blockCipherChoice[i] = toupper(blockCipherChoice[i]);
         }
 
-        // // Loop that prevents program from moving on until user makes a valid std::string input
+        // // Loop that prevents program from moving on until user makes a valid string input
         // while (std::cin.fail())
         // {
         //     inputErrorMessage(0);                                                    // Outputs error message                                        
@@ -141,33 +143,34 @@ void menu()
             if (blockCipherChoice == "1" || blockCipherChoice == "ECB")
             {
                 std::string hexInput = hexChoice();
-                encryptionResult = ECB(hexInput);
+                encryptionResult = ECB(hexInput, hexKey, IV);
+
             }
 
             // else if: Option 2 (CBC)
             if (blockCipherChoice == "2" || blockCipherChoice == "CBC")
             {
                 std::string hexInput = hexChoice();
-                encryptionResult = CBC(hexInput);
+                encryptionResult = CBC(hexInput, hexKey, IV);
             }
 
             // else if: Option 3 (OFB)
             if (blockCipherChoice == "3" || blockCipherChoice == "OFB")
             {
                 std::string hexInput = hexChoice();
-                encryptionResult = OFB(hexInput);
+                encryptionResult = OFB(hexInput, hexKey, IV);
             }
             // else if: Option 4 (CFB)
             if (blockCipherChoice == "4" || blockCipherChoice == "CFB")
             {
                 std::string hexInput = hexChoice();
-                encryptionResult = CFB(hexInput);
+                encryptionResult = CFB(hexInput, hexKey, IV);
             }
             // else if: Option 5 (CTR)
             if (blockCipherChoice == "5" || blockCipherChoice == "CTR")
             {
                 std::string hexInput = hexChoice();
-                encryptionResult = CTR(hexInput);
+                encryptionResult = CTR(hexInput, hexKey, IV);
             }
             // else if: Option 6 (Exit)
             if (blockCipherChoice == "6" || blockCipherChoice == "EXIT")
@@ -176,7 +179,6 @@ void menu()
                 proceed = 0;
             }
         }
-
         // If "menuChoice" does not fit within any of the specified parameters above, execute "inputErrorMessage" function and jump to "userInput".
         else
         {
@@ -186,12 +188,8 @@ void menu()
         std::cout << std::endl << "###################################################" << std::endl;
     }
 
-    
 
-
-    //hexBinaryConvert(value, hexBinaryValue);
-    //binaryToHex(binaryValue);
-    //hexToBinary(hexValue);
+    std::cout << std:: endl << "Encryption Results: " << std::endl;
 
 
 
@@ -200,19 +198,46 @@ void menu()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string ECB(std::string hexInput)
+std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
 {
     std::string ECBresult;
 
     std::cout << "blockCipherChoice = ECB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
+
+    std::string binaryHexInput = hex2Binary(hexInput);
+    std::string binaryHexKey = hex2Binary(hexKey);
+    std::string binaryIV = hex2Binary(IV);
+
+
+
+
+    boolWorkChoice();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return ECBresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CBC(std::string hexInput)
+std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
 {
     std::string CBCresult;
 
@@ -224,7 +249,7 @@ std::string CBC(std::string hexInput)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string OFB(std::string hexInput)
+std::string OFB(std::string hexInput, std::string hexKey, std::string IV)
 {    
     std::string OFBresult;
 
@@ -236,7 +261,7 @@ std::string OFB(std::string hexInput)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CFB(std::string hexInput)
+std::string CFB(std::string hexInput, std::string hexKey, std::string IV)
 {
     std::string CFBresult;
 
@@ -248,7 +273,7 @@ std::string CFB(std::string hexInput)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CTR(std::string hexInput)
+std::string CTR(std::string hexInput, std::string hexKey, std::string IV)
 {   
     std::string CTRresult;
 
@@ -260,32 +285,7 @@ std::string CTR(std::string hexInput)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string hexBinaryConvert(std::string value, bool hexBinaryOption)
-{
-    std::string convertedValue;
-    // value == hex/binary value that will be converted.
-    // hexBinaryOption == value that determines the function being performed
-
-    /*
-    if (hexBinaryOption == 0)
-        binaryToHex(value);
-    else if (hexBinaryOption == 1)
-        hexToBinary(value);
-    else
-    {
-        errorMessage();
-    }
-    */
-
-
-
-
-    return convertedValue;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-std::string binaryToHex(std::string binaryValue)
+std::string binary2Hex(std::string binaryString)
 {
     std::string hexValue;
 
@@ -296,12 +296,87 @@ std::string binaryToHex(std::string binaryValue)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string hexToBinary(std::string hexValue)
+std::string hex2Binary(std::string hexString)
 {
-    std::string binaryValue;
+    std::vector<std::string> binaryVector;
+    std::string newBinaryValue;
+
+    for (int i = 0; i < hexString.size(); i++)
+    {
+        switch(hexString[i])
+        {
+            case '0':
+                binaryVector[i] = "0000";
+                break;
+            case '1':
+                binaryVector[i] = "0001";
+                break;
+            case '2':
+                binaryVector[i] = "0010";
+                break;
+            case '3':
+                binaryVector[i] = "0011";
+                break;
+            case '4':
+                binaryVector[i] = "0100";
+                break;
+            case '5':
+                binaryVector[i] = "0101";
+                break;
+            case '6':
+                binaryVector[i] = "0101";
+                break;
+            case '7':
+                binaryVector[i] = "0111";
+                break;
+            case '8':
+                binaryVector[i] = "1000";
+                break;
+            case '9':
+                binaryVector[i] = "1001";
+                break;
+            case 'A':
+                binaryVector[i] = "1010";
+                break;
+            case 'B':
+                binaryVector[i] = "1011";
+                break;
+            case 'C':
+                binaryVector[i] = "1100";
+                break;
+            case 'D':
+                binaryVector[i] = "1101";
+                break;
+            case 'E':
+                binaryVector[i] = "1110";
+                break;
+            case 'F':
+                binaryVector[i] = "1111";
+                break;
+        }
+    }
+
+    for (int i = 0; i < binaryVector.size(); i++)
+    {
+        newBinaryValue += binaryVector[i];
+    }
 
 
-    return binaryValue;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return newBinaryValue;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -311,16 +386,6 @@ std::string XOR(std::string value1, std::string value2)
     std::string xorResult;
 
     return xorResult;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-bool verifyInput(std::string input, std::string inputType)
-{
-    bool inputVerification;
-
-
-    return inputVerification;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -335,16 +400,16 @@ std::string hexChoice()
     std::cout << std::endl << "Enter four hex values to be used as the 16-bit input: ";
     std::cin >> hexValue;
 
-    // Loops through each character of "hexValue" to make sure that the std::string is completely capatilized 
+    // Loops through each character of "hexValue" to make sure that the std::string is capatilized 
     for (int i = 0; i < hexValue.size(); i++)
     {
         hexValue[i] = toupper(hexValue[i]);
     }
 
-    // If statement to verify that "hexValue" contains four characters
+    // If statement to verify that the string "hexValue" contains four characters
     if (hexValue.size() == 4)
     {
-        // Loop statement that verifies that each individual character of "hexValue" is a valid hex value.
+        // Loop statement that verifies that each individual character of the string "hexValue" is a valid hex value.
         for (int i = 0; i < hexValue.size(); i++)
         {
             if (
@@ -369,6 +434,65 @@ std::string hexChoice()
     //std::cout << std::endl;
 
     return hexValue;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+bool continueMenu()
+{
+
+    continueChoiceInput:
+    std::string continueChoice;
+    std::cout << "Would you like work to be shown? (Y/N): ";
+    std::cin >> continueChoice;
+
+    if (continueChoice.size() == 1 && (toupper(continueChoice[0]) == 'Y' || toupper(continueChoice[0] == 'N')))
+    {
+        if (continueChoice == "Y")
+            return true;
+        else
+            return false;
+
+    }
+    // If "continueChoice" does not fit within the specified parameters above, execute "inputErrorMessage" function and jump to "continueChoiceInput".
+    else
+    {
+        inputErrorMessage(0);                                                    // Outputs error message                                        
+        goto continueChoiceInput;
+    }
+    
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+bool boolWorkChoice()
+{
+    workChoiceInput:
+    std::string workChoice;
+    std::cout << "Would you like work to be shown? (Y/N): ";
+    std::cin >> workChoice;
+
+    if (workChoice.size() == 1 && (toupper(workChoice[0]) == 'Y' || toupper(workChoice[0] == 'N')))
+    {
+        if (workChoice == "Y")
+            return true;
+        else
+            return false;
+
+    }
+    // If "workChoice" does not fit within the specified parameters above, execute "inputErrorMessage" function and jump to "workChoiceInput".
+    else
+    {
+        inputErrorMessage(0);                                                    // Outputs error message                                        
+        goto workChoiceInput;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+void showWork(std::string blockCipherType)
+{
+
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
