@@ -15,4 +15,4 @@
 
 ## 4. Run the makefile command
 `make`
-- This will compile and run the file "main.cpp".
+- This will compile and run the code contained within the file "main.cpp".
