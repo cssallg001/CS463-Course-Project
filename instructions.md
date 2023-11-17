@@ -11,6 +11,6 @@
 - If "make" is not yet installed your Unix distro, you can simply run this command   
 `sudo apt update; sudo apt upgrade -y; sudo apt install make`
 
-## 4. Run the make command
+## 4. Run the "make" command
 `make`
 - This will run the file "makefile", which contains code to compile and run the code contained within "main.cpp".
