@@ -13,6 +13,6 @@
 - This will update your Unix distro and then install 'make'.
 
 
-## 3. Run the makefile command
+## 4. Run the makefile command
 `make`
 - This will compile and run the file "main.cpp".
