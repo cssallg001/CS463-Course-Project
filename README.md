@@ -38,3 +38,6 @@
 >>> * Prompt user for hex values  
 >>>>> * Output Result of CTR  
 > * “Continue? [Y / N]”  
+
+## Instructions
+[Instructions](instructions.md)
