@@ -7,10 +7,10 @@
 ## 2. Use the "cd" command to change your directory to inside of the cloned repository
 `cd CS463-Course-Project/`
 
-## 3. Verify that 'make' is installed and properly up to date within your Unix distro. 
-- If 'make' is not yet installed your Unix distro, you can simply run this command   
+## 3. Verify that "make" is installed and properly up to date within your Unix distro. 
+- If "make" is not yet installed your Unix distro, you can simply run this command   
 `sudo apt update; sudo apt upgrade -y; sudo apt install make`
 
-## 4. Run the makefile command
+## 4. Run the make command
 `make`
-- This will compile and run the code contained within "main.cpp".
+- This will run the file "makefile", which contains code to compile and run the code contained within "main.cpp".
