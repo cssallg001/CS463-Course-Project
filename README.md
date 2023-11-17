@@ -21,23 +21,28 @@
 ## CLI Menu Tree:  
 
 
-> “Pick a number:”  
-> 1) Electronic Code Book (ECB)  
->>> * Prompt user for hex values  
->>>>> * Output Result of ECB  
-> 2) Cipher Block Chaining Mode (CBC)  
->>>  * Prompt user for hex values  
->>>> * Output Result of CBC  
-> 3) Output Feedback Mode (OFB) 
->> * Prompt user for hex values  
->>>>> * Output Result of GCM  
-> 4) Cipher Feedback Mode (CFB) 	   
->>> * Prompt user for hex values  
->>>>> * Output Result of CFB  
-> 5) Counter Mode (CTR)  
->>> * Prompt user for hex values  
->>>>> * Output Result of CTR  
-> * “Continue? [Y / N]”  
+“Pick a number:”  
+1) Electronic Code Book (ECB)  
+- Prompt user for hex values  
+- Output Result of ECB  
+
+2) Cipher Block Chaining Mode (CBC)  
+- Prompt user for hex values  
+- Output Result of CBC  
+
+3) Output Feedback Mode (OFB) 
+- Prompt user for hex values  
+
+4) Cipher Feedback Mode (CFB) 	   
+- Prompt user for hex values  
+- Output Result of CFB  
+
+5) Counter Mode (CTR)  
+- Prompt user for hex values  
+- Output Result of CTR  
+- “Continue? [Y / N]”  
+
+6) Exit
 
 ## Instructions
 [Click here to view instructions](instructions.md)
