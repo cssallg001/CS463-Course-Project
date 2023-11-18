@@ -32,7 +32,7 @@ std::string CTR(std::string hexInput, std::string hexKey, std::string IV);
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-int main()
+main()
 {
     menu();
     std::cout << std::endl << std::endl << "Ending..." << std::endl << std::endl; 
@@ -186,10 +186,10 @@ void menu()
             goto userInput;
         }
         std::cout << std::endl << "###################################################" << std::endl;
+        std::cout << std:: endl << "Encryption Result = " << encryptionResult << std::endl;
     }
 
 
-    std::cout << std:: endl << "Encryption Results: " << std::endl;
 
 
 
@@ -200,8 +200,7 @@ void menu()
 
 std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
 {
-    std::string ECBresult;
-
+    std::cout << std::endl << std::endl;
     std::cout << "blockCipherChoice = ECB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
@@ -210,29 +209,57 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
 
+    // std::string ecbFunction;
 
+    std::string binaryECBresult;
+    std::string hexECBresult;
+    std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
+    std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
 
+    std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
+    std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
 
-    boolWorkChoice();
+    // boolWorkChoice();
 
+    std::cout << std::endl << "Y1:" << std::endl;
+    hexLTy1 = hexInput[0];
+    hexRTy1 = hexInput[1];
+    hexLKy1 = hexKey[0];
+    hexRKy1 = hexKey[1];
+    binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
+    binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
+    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+    hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
+    hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
+    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+    hexY1 = hexLCy1 + hexRCy1;
+    std::cout << "Y1 = " << hexY1 << std::endl;
 
+    std::cout << std::endl << "Y2:" << std::endl;
+    hexLTy2 = hexInput[2];
+    hexRTy2 = hexInput[3];
+    hexLKy2 = hexKey[0];
+    hexRKy2 = hexKey[1];
+    binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
+    binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl; 
+    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
+    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+    hexY2 = hexLCy2 + hexRCy2;
+    std::cout << "Y2 = " << hexY2 << std::endl;
 
+    hexECBresult = hexY1 + hexY2;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return ECBresult;
+    return hexECBresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -289,7 +316,129 @@ std::string binary2Hex(std::string binaryString)
 {
     std::string hexValue;
 
+    std::vector<std::string> hexVector, binaryVectorString;
+    std::string newHexValue;
 
+    // Allocating size of hexVector to be equivalent to the number of hex values that will need to be outputted 
+    for (int i = 0; i < binaryString.size()/4; i++)
+    {
+        hexVector.push_back("");
+    }
+
+    // Nested loops that break the "binaryString" up into smaller strings that contain 4 "bits" each
+    // and then assigns those groups of 4 bits are assigned a new position within "binaryVectorString".    
+    for (int i = 0; i < binaryString.size()/4; i++) 
+    {
+        // std::cout << i << std::endl;
+        std::string tempBinaryString;
+
+        for (int j = i*4; j < (i*4) + 4 ; j++)
+        {
+            // std::cout << "    " << j << std::endl;
+            tempBinaryString += binaryString[j];
+        }
+        binaryVectorString.push_back(tempBinaryString);
+    }
+
+    // Wanted to make this a switch statement but C++ doesn't support using strings for switch statements
+    // So have fun reading this broken switch statement and the series of if statements that were super tedious to type out
+    for (int i = 0; i < binaryVectorString.size(); i++)
+    {
+        // switch(binaryVectorString[i])
+        // {
+        //     case '0000':
+        //         hexVector[i] = '0';
+        //         break;
+        //     case '0001':
+        //         hexVector[i] = '1';
+        //         break;
+        //     case '0010':
+        //         hexVector[i] = '2';
+        //         break;
+        //     case '0011':
+        //         hexVector[i] = '3';
+        //         break;
+        //     case '0100':
+        //         hexVector[i] = '4';
+        //         break;
+        //     case '0101':
+        //         hexVector[i] = '5';
+        //         break;
+        //     case '0110':
+        //         hexVector[i] = '6';
+        //         break;
+        //     case '0111':
+        //         hexVector[i] = '7';
+        //         break;
+        //     case '1000':
+        //         hexVector[i] = '8';
+        //         break;
+        //     case "1001":
+        //         hexVector[i] = '9';
+        //         break;
+        //     case "1010":
+        //         hexVector[i] = 'A';
+        //         break;
+        //     case "1011":
+        //         hexVector[i] = 'B';
+        //         break;
+        //     case "1100":
+        //         hexVector[i] = 'C';
+        //         break;
+        //     case "1101":
+        //         hexVector[i] = 'D';
+        //         break;
+        //     case "1110":
+        //         hexVector[i] = 'E';
+        //         break;
+        //     case "1111":
+        //         hexVector[i] = 'F';
+        //         break;
+        // }
+
+        if (binaryVectorString[i] == "0000")
+            hexVector[i] = '0';
+        if (binaryVectorString[i] == "0001")
+            hexVector[i] = '1';
+        if (binaryVectorString[i] == "0010")
+            hexVector[i] = '2';
+        if (binaryVectorString[i] == "0011")
+            hexVector[i] = '3';
+        if (binaryVectorString[i] == "0100")
+            hexVector[i] = '4';
+        if (binaryVectorString[i] == "0101")
+            hexVector[i] = '5';
+        if (binaryVectorString[i] == "0110")
+            hexVector[i] = '6';
+        if (binaryVectorString[i] == "0111")
+            hexVector[i] = '7';
+        if (binaryVectorString[i] == "1000")
+            hexVector[i] = '8';
+        if (binaryVectorString[i] == "1001")
+            hexVector[i] = '9';
+        if (binaryVectorString[i] == "1010")
+            hexVector[i] = "A";
+        if (binaryVectorString[i] == "1011")
+            hexVector[i] = "B";
+        if (binaryVectorString[i] == "1100")
+            hexVector[i] = "C";
+        if (binaryVectorString[i] == "1101")
+            hexVector[i] = "D";
+        if (binaryVectorString[i] == "1110")
+            hexVector[i] = "E";
+        if (binaryVectorString[i] == "1111")
+            hexVector[i] = "F";
+
+        // I hate myself for not Googling a smaller function to convert from binary to hex
+        // but dammitt I'm now committed so there's no backing down at this point
+        // and if I have to suffer through this then so does everyone else that decides to read this code.
+    }
+
+    // Loop that takes all values contained within "hexVector" and combines them into a single string called "hexValue" 
+    for (int i = 0; i < hexVector.size(); i++)
+    {
+        hexValue += hexVector[i];
+    }
 
     return hexValue;
 }
@@ -301,6 +450,13 @@ std::string hex2Binary(std::string hexString)
     std::vector<std::string> binaryVector;
     std::string newBinaryValue;
 
+    // Allocates space in "binaryVector" so that it can have the proper number of binary values to represent the hex values of "hexString"
+    for (int i = 0; i < hexString.size() * 4; i++)
+    {
+        binaryVector.push_back("");
+    }
+
+    // Switch statement to return binary values equivalent to the hex values contained within "hexString"
     for (int i = 0; i < hexString.size(); i++)
     {
         switch(hexString[i])
@@ -324,7 +480,7 @@ std::string hex2Binary(std::string hexString)
                 binaryVector[i] = "0101";
                 break;
             case '6':
-                binaryVector[i] = "0101";
+                binaryVector[i] = "0110";
                 break;
             case '7':
                 binaryVector[i] = "0111";
@@ -356,25 +512,13 @@ std::string hex2Binary(std::string hexString)
         }
     }
 
+    // Loop that takes all values contained within "binaryVector" and combines them into a single string called "newBinaryValue" 
     for (int i = 0; i < binaryVector.size(); i++)
     {
         newBinaryValue += binaryVector[i];
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // std::cout << "newBinaryValue = " << newBinaryValue << std::endl;
 
     return newBinaryValue;
 }
@@ -383,7 +527,32 @@ std::string hex2Binary(std::string hexString)
 
 std::string XOR(std::string value1, std::string value2)
 {
+    std::vector<std::string> xorVector;
     std::string xorResult;
+    int size = value1.size();
+    int count1 = 0, count2 = 0;
+
+    // Allocates space in "xorVector" so that it can have the same number of binary values as "value1" and "value2"
+    for (int i = 0; i < value1.size(); i++)
+    {
+        xorVector.push_back("");
+    }
+
+    // XOR Function
+    for (int i = 0; i < xorVector.size(); i++)
+    {
+        if ((value1[i] == '0' && value2[i] == '0') || (value1[i] == '1' && value2[i] == '1'))
+            xorVector[i] = '0';
+        else
+            xorVector[i] = '1';
+        // std::cout << xorVector[i] << std::endl;
+    }
+
+    // Takes all values within "xorVector" and concats them into a single string 
+    for (int i = 0; i < xorVector.size(); i++)
+    {
+        xorResult += xorVector[i];
+    }
 
     return xorResult;
 }
