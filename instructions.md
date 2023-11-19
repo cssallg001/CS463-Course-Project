@@ -13,4 +13,4 @@
 
 ## 4. Run the 'make' command
 `make`
-- This will run the file 'makefile', which contains code to compile and run the code contained within 'main.cpp'.
+- This will run the file 'makefile', which will compile and run the code contained within 'main.cpp'.
