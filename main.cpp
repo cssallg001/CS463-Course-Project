@@ -76,6 +76,7 @@ void menu()
     std::string hexKey = "C5", IV = "A9"; 
     std::string blockCipherChoice;
     std::string encryptionResult;
+    std::string encryptionOption;
 
 
         // Menu to prompt user to choose between the different encryption methods
@@ -142,6 +143,7 @@ void menu()
             // if: Option 1 (ECB)
             if (blockCipherChoice == "1" || blockCipherChoice == "ECB")
             {
+                encryptionOption = "ECB";
                 std::string hexInput = hexChoice();
                 encryptionResult = ECB(hexInput, hexKey, IV);
 
@@ -150,6 +152,7 @@ void menu()
             // else if: Option 2 (CBC)
             if (blockCipherChoice == "2" || blockCipherChoice == "CBC")
             {
+                encryptionOption = "CBC";
                 std::string hexInput = hexChoice();
                 encryptionResult = CBC(hexInput, hexKey, IV);
             }
@@ -157,18 +160,21 @@ void menu()
             // else if: Option 3 (OFB)
             if (blockCipherChoice == "3" || blockCipherChoice == "OFB")
             {
+                encryptionOption = "OFB";
                 std::string hexInput = hexChoice();
                 encryptionResult = OFB(hexInput, hexKey, IV);
             }
             // else if: Option 4 (CFB)
             if (blockCipherChoice == "4" || blockCipherChoice == "CFB")
             {
+                encryptionOption = "CFB";
                 std::string hexInput = hexChoice();
                 encryptionResult = CFB(hexInput, hexKey, IV);
             }
             // else if: Option 5 (CTR)
             if (blockCipherChoice == "5" || blockCipherChoice == "CTR")
             {
+                encryptionOption = "CTR";
                 std::string hexInput = hexChoice();
                 encryptionResult = CTR(hexInput, hexKey, IV);
             }
@@ -177,6 +183,7 @@ void menu()
             {
                 // To be further implemented
                 proceed = 0;
+                break;
             }
         }
         // If "menuChoice" does not fit within any of the specified parameters above, execute "inputErrorMessage" function and jump to "userInput".
@@ -186,14 +193,8 @@ void menu()
             goto userInput;
         }
         std::cout << std::endl << "###################################################" << std::endl;
-        std::cout << std:: endl << "Encryption Result = " << encryptionResult << std::endl;
+        std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
     }
-
-
-
-
-
-
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -209,7 +210,73 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
 
-    // std::string ecbFunction;
+    std::string binaryECBresult;
+    std::string hexECBresult;
+    std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
+    std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
+
+    std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
+    std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
+
+    // Math for Y1
+    hexLTy1 = hexInput[0];
+    hexRTy1 = hexInput[1];
+    hexLKy1 = hexKey[0];
+    hexRKy1 = hexKey[1];
+    binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
+    binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
+    hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
+    hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
+    hexY1 = hexLCy1 + hexRCy1;
+
+    // Math for Y2
+    hexLTy2 = hexInput[2];
+    hexRTy2 = hexInput[3];
+    hexLKy2 = hexKey[0];
+    hexRKy2 = hexKey[1];
+    binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
+    binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
+    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    hexY2 = hexLCy2 + hexRCy2;
+
+    // boolWorkChoice();
+
+    std::cout << std::endl << "Y1:" << std::endl;
+    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+    std::cout << "Y1 = " << hexY1 << std::endl;
+
+    std::cout << std::endl << "Y2:" << std::endl;
+    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl; 
+    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+    std::cout << "Y2 = " << hexY2 << std::endl;
+
+    hexECBresult = hexY1 + hexY2;
+    return hexECBresult;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
+{
+    std::string binaryCBCresult;
+    std::string hexCBCresult;
+
+    std::cout << "blockCipherChoice = CBC" << std::endl;
+    std::cout << "hexInput = " << hexInput << std::endl;
+
+    std::string binaryHexInput = hex2Binary(hexInput);
+    std::string binaryHexKey = hex2Binary(hexKey);
+    std::string binaryIV = hex2Binary(IV);
 
     std::string binaryECBresult;
     std::string hexECBresult;
@@ -219,71 +286,137 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
 
-    // boolWorkChoice();
+    std::string LTRTxorY1, LTRTxorY2;
+    std::string firstHalf = "  ", secondHalf = "  ";
 
-    std::cout << std::endl << "Y1:" << std::endl;
-    hexLTy1 = hexInput[0];
-    hexRTy1 = hexInput[1];
+    // Math for Y1
+    LTRTxorY1 = binary2Hex(XOR(hex2Binary(hexInput), hex2Binary(IV)));
+    hexLTy1 = LTRTxorY1[0];
+    hexRTy1 = LTRTxorY1[1];
     hexLKy1 = hexKey[0];
     hexRKy1 = hexKey[1];
     binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
     binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
-    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
     hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
     hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
-    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
     hexY1 = hexLCy1 + hexRCy1;
-    std::cout << "Y1 = " << hexY1 << std::endl;
-
-    std::cout << std::endl << "Y2:" << std::endl;
-    hexLTy2 = hexInput[2];
-    hexRTy2 = hexInput[3];
+    
+    // Math for Y2
+    firstHalf[0] = hexInput[2];
+    firstHalf[1] = hexInput[3];
+    secondHalf[0] = hexY1[0];
+    secondHalf[1] = hexY1[1];
+    LTRTxorY2 = binary2Hex(XOR(hex2Binary(firstHalf), hex2Binary(secondHalf)));
+    hexLTy2 = LTRTxorY2[0];
+    hexRTy2 = LTRTxorY2[1];
     hexLKy2 = hexKey[0];
     hexRKy2 = hexKey[1];
     binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
     binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
+    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    hexY2 = hexLCy2 + hexRCy2;
+
+    // boolWorkChoice();
+
+    std::cout << std::endl << "Y1:" << std::endl;
+    std::cout << "Y1 = e_" << hexKey << "(" << hexInput[0] << hexInput[1] << " xor " << IV << ")" << std::endl;
+    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+    std::cout << "Y1 = " << hexY1 << std::endl;
+
+    std::cout << std::endl << "Y2:" << std::endl;
+    std::cout << "Y2 = e_" << hexKey << "(" << hexInput[2] << hexInput[3] << " xor " << IV << ")" << std::endl;
     std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
     std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
     std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl; 
-    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
-    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
     std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
     std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
-    hexY2 = hexLCy2 + hexRCy2;
     std::cout << "Y2 = " << hexY2 << std::endl;
 
-    hexECBresult = hexY1 + hexY2;
-
-    return hexECBresult;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
-{
-    std::string CBCresult;
-
-    std::cout << "blockCipherChoice = CBC" << std::endl;
-    std::cout << "hexInput = " << hexInput << std::endl;
-
-    return CBCresult;
+    hexCBCresult = hexY1 + hexY2;
+    return hexCBCresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 std::string OFB(std::string hexInput, std::string hexKey, std::string IV)
 {    
-    std::string OFBresult;
+    std::string binaryOFBresult;
+    std::string hexOFBresult;
 
     std::cout << "blockCipherChoice = OFB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
-    return OFBresult;
+    std::string binaryHexInput = hex2Binary(hexInput);
+    std::string binaryHexKey = hex2Binary(hexKey);
+    std::string binaryIV = hex2Binary(IV);
+
+    std::string binaryECBresult;
+    std::string hexECBresult;
+    std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
+    std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
+
+    std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
+    std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
+
+    std::string LTRTxorY1, LTRTxorY2;
+    std::string firstHalf = "  ", secondHalf = "  ";
+
+    // Math for S1
+    hexLTy1 = IV[0];
+    hexRTy1 = IV[1];
+    hexLKy1 = hexKey[0];
+    hexRKy1 = hexKey[1];
+    binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
+    binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
+    hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
+    hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
+    hexY1 = hexLCy1 + hexRCy1;
+    firstHalf[0] = hexInput[0];
+    firstHalf[1] = hexInput[1];
+    hexY1 = binary2Hex(XOR(hex2Binary(hexY1), hex2Binary(firstHalf)));
+
+    // Math for S2
+    hexLTy2 = hexLCy1;
+    hexRTy2 = hexRCy1;
+    hexLKy2 = hexKey[0];
+    hexRKy2 = hexKey[1];
+    binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
+    binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    hexLCy2 = binary2Hex(binaryLCy2);
+    hexRCy2 = binary2Hex(binaryRCy2);
+    hexY2 = hexLCy2 + hexRCy2;
+    secondHalf[0] = hexInput[2];
+    secondHalf[1] = hexInput[3];
+    hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
+
+    std::cout << std::endl << "S1:" << std::endl;
+    std::cout << "S1 = e_" << hexKey << "(" << IV << ")" << std::endl;
+    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+    std::cout << "S1 = " << hexY1 << std::endl;
+
+    std::cout << std::endl << "S2:" << std::endl;
+    std::cout << "S2 = e_" << hexKey << "(" << hexLCy1 << hexRCy1 <<  ")" << std::endl;
+    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
+    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << binary2Hex(binaryLCy2) << std::endl;
+    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+    std::cout << "S2 = " << hexY2 << std::endl;
+
+    return hexOFBresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -561,10 +694,12 @@ std::string XOR(std::string value1, std::string value2)
 
 std::string hexChoice()
 {
-    std::string hexValue;
-
     // Jump point 
     hexValueJumpPoint:
+    std::string hexValue;
+    int hexValCount = 0;
+
+    std::vector<std::string> hexInputVector = {"", "", "", ""}; 
 
     std::cout << std::endl << "Enter four hex values to be used as the 16-bit input: ";
     std::cin >> hexValue;
@@ -575,7 +710,7 @@ std::string hexChoice()
         hexValue[i] = toupper(hexValue[i]);
     }
 
-    // If statement to verify that the string "hexValue" contains four characters
+/*     // If statement to verify that the string "hexValue" contains four characters
     if (hexValue.size() == 4)
     {
         // Loop statement that verifies that each individual character of the string "hexValue" is a valid hex value.
@@ -596,6 +731,51 @@ std::string hexChoice()
     {
         inputErrorMessage(2);                                                            // Outputs error message                                        
         goto hexValueJumpPoint;
+    } */
+
+    for (int i = 0; i < hexValue.size(); i++)
+    {
+        if (
+            hexValue[i] == '0' || hexValue[i] == '1' || hexValue[i] == '2' || hexValue[i] == '3' || hexValue[i] == '4'|| hexValue[i] == '5' || hexValue[i] == '6' || hexValue[i] == '7' || hexValue[i] == '8' || hexValue[i] == '9'
+            ||
+            hexValue[i] == 'A' || hexValue[i] == 'B' || hexValue[i] == 'C' || hexValue[i] == 'D' || hexValue[i] == 'E' || hexValue[i] == 'F'
+            )
+        {
+            hexValCount++;
+            // If statement to verify that the string "hexValue" contains four characters
+            if (hexValCount <= 4)
+                hexInputVector[i] = hexValue[i];
+            else 
+            {
+                inputErrorMessage(2);                                                               // Outputs error message                                        
+                goto hexValueJumpPoint;
+            } 
+        }
+    }
+
+    // If statement to verify that the string "hexValCount" is the same size as "hexInputVector".
+    // (Only adding this here because the previous for loop only lasts until "hexValCount" is equivalent to "hexInputVector"
+    // which means there's a possiblility of "hexValCount" being less than 4 yet so it won't trigger the error message in the previous loop)
+    if (hexValCount != 4) 
+    {
+        inputErrorMessage(2);                                                                       // Outputs error message                                        
+        goto hexValueJumpPoint;
+    }
+
+
+    for (int i = 0; i < 4; i++)
+    {
+        if (
+            hexInputVector[i] == ""
+            ||
+            (hexValue[i] != '0' && hexValue[i] != '1' && hexValue[i] != '2' && hexValue[i] != '3' && hexValue[i] != '4'&& hexValue[i] != '5' && hexValue[i] != '6' && hexValue[i] != '7' && hexValue[i] != '8' && hexValue[i] != '9'
+            &&
+            hexValue[i] != 'A' && hexValue[i] != 'B' && hexValue[i] != 'C' && hexValue[i] != 'D' && hexValue[i] != 'E' && hexValue[i] != 'F')
+        )
+        {
+                    inputErrorMessage(1);                                                    // Outputs error message                                        
+                    goto hexValueJumpPoint;
+        }
     }
 
     //std:: cout << std::endl << "16-bit input: " << std::endl;
@@ -609,7 +789,6 @@ std::string hexChoice()
 
 bool continueMenu()
 {
-
     continueChoiceInput:
     std::string continueChoice;
     std::cout << "Would you like work to be shown? (Y/N): ";
