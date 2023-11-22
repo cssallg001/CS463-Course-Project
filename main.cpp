@@ -11,24 +11,25 @@
 #include <cstring>
 #include <cmath>
 #include <vector>
+#include <random>
+#include <ctime>
 
 // using namespace std;
 
 // Declaring functions
 void menu();
 bool continueMenu();
-bool boolWorkChoice();
+bool boolWorkChoice(bool showWorkVal);
 void inputErrorMessage(int errorChoice);
-void showWork(std::string blockCipherType);
 std::string hexChoice();
 std::string binary2Hex(std::string binaryString);
 std::string hex2Binary(std::string hexString);
 std::string XOR(std::string value1, std::string value2);
-std::string ECB(std::string hexInput, std::string hexKey, std::string IV);
-std::string CBC(std::string hexInput, std::string hexKey, std::string IV);
-std::string OFB(std::string hexInput, std::string hexKey, std::string IV);
-std::string CFB(std::string hexInput, std::string hexKey, std::string IV);
-std::string CTR(std::string hexInput, std::string hexKey, std::string IV);
+std::string ECB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal);
+std::string CBC(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal);
+std::string OFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal);
+std::string CFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal);
+std::string CTR(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal);
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -77,36 +78,44 @@ void menu()
     std::string blockCipherChoice;
     std::string encryptionResult;
     std::string encryptionOption;
+    bool showWorkVal = false;
+    std::string showWorkString;
+
+    if (!showWorkVal)
+        showWorkString = "Disabled";
+    else if (showWorkVal)
+        showWorkString = "Enabled";
 
 
         // Menu to prompt user to choose between the different encryption methods
         std::cout << std::endl
-        // << "0         1         2         3         4         5" << std::endl
-        // << "012345678901234567890123456789012345678901234567890" << std::endl
-            << "###################################################" << std::endl
-            << "               CS 463 Course Project               " << std::endl
-            << "                 By Sean Allgaier                  " << std::endl
-            << "###################################################" << std::endl << std::endl;
+            // << "0         1         2         3         4         5         6         7     " << std::endl
+            // << "0123456789012345678901234567890123456789012345678901234567890123456789012345" << std::endl
+            << "############################################################################" << std::endl
+            << "                           CS 463 Course Project                            " << std::endl
+            << "                             By Sean Allgaier                               " << std::endl
+            << "############################################################################" << std::endl << std::endl;
     while (proceed == 1)
     {
         std::cout << std:: endl
-            << "###################################################" << std::endl
-            << "              Current Variable Values              " << std::endl
-            << "---------------------------------------------------" << std::endl
-        //  << "                      IV = A9                      " << std::endl
-        //  << "                   8-bit key = C5                  " << std::endl
-            << "                      IV = " << IV << "                      " <<std::endl
-            << "                   8-bit key = " << hexKey << "                  " << std::endl
-            << "###################################################" << std::endl
-            << "                      Options                      " << std::endl
-            << "---------------------------------------------------" << std::endl
-            << "                      #1: ECB                      " << std::endl
-            << "                      #2: CBC                      " << std::endl
-            << "                      #3: OFB                      " << std::endl
-            << "                      #4: CFB                      " << std::endl
-            << "                      #5: CTR                      " << std::endl
-            << "                      #6: Exit                     " << std::endl
-            << "###################################################" << std::endl
+            << "############################################################################" << std::endl
+            << "                          Current Variable Values                           " << std::endl
+            << "----------------------------------------------------------------------------" << std::endl
+            // << "                                  IV = A9                                   " << std::endl
+            // << "                              8-bit key = C5                                " << std::endl
+            << "                                  IV = " << IV << "                                   " <<std::endl
+            << "                              8-bit key = " << hexKey << "                                " << std::endl
+            << "############################################################################" << std::endl
+            << "                                  Options                                   " << std::endl
+            << "----------------------------------------------------------------------------" << std::endl
+            << "                    #1: Electronic Codebook Mode (ECB)                      " << std::endl
+            << "                   #2: Cipher Block Chaining Mode (CBC)                     " << std::endl
+            << "                      #3: Output Feedback Mode (OFB)                        " << std::endl
+            << "                      #4: Cipher Feedback Mode (CFB)                        " << std::endl
+            << "                          #5: Counter Mode (CTR)                            " << std::endl
+            << "                         #6: Toggle Work (" << showWorkString << ")                            " << std::endl
+            << "                                 #7: Exit                                   " << std::endl
+            << "############################################################################" << std::endl
             << std::endl;
     
     
@@ -135,7 +144,7 @@ void menu()
         // Series of "if" + "else if" statements to verify whether or not the user's input is valid
         // and to execute the functions for the menu options
         if (
-            (blockCipherChoice == "1" || blockCipherChoice == "2" || blockCipherChoice == "3" || blockCipherChoice == "4" || blockCipherChoice == "5" || blockCipherChoice == "6")
+            (blockCipherChoice == "1" || blockCipherChoice == "2" || blockCipherChoice == "3" || blockCipherChoice == "4" || blockCipherChoice == "5" || blockCipherChoice == "6" || blockCipherChoice == "7")
             ||
             (blockCipherChoice == "ECB" || blockCipherChoice == "CBC" || blockCipherChoice == "OFB" || blockCipherChoice == "CFB" || blockCipherChoice == "CTR" || blockCipherChoice == "EXIT")
             ) 
@@ -145,8 +154,9 @@ void menu()
             {
                 encryptionOption = "ECB";
                 std::string hexInput = hexChoice();
-                encryptionResult = ECB(hexInput, hexKey, IV);
-
+                encryptionResult = ECB(hexInput, hexKey, IV, showWorkVal);
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
             }
 
             // else if: Option 2 (CBC)
@@ -154,7 +164,9 @@ void menu()
             {
                 encryptionOption = "CBC";
                 std::string hexInput = hexChoice();
-                encryptionResult = CBC(hexInput, hexKey, IV);
+                encryptionResult = CBC(hexInput, hexKey, IV, showWorkVal);
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
             }
 
             // else if: Option 3 (OFB)
@@ -162,24 +174,40 @@ void menu()
             {
                 encryptionOption = "OFB";
                 std::string hexInput = hexChoice();
-                encryptionResult = OFB(hexInput, hexKey, IV);
+                encryptionResult = OFB(hexInput, hexKey, IV, showWorkVal);
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
             }
             // else if: Option 4 (CFB)
             if (blockCipherChoice == "4" || blockCipherChoice == "CFB")
             {
                 encryptionOption = "CFB";
                 std::string hexInput = hexChoice();
-                encryptionResult = CFB(hexInput, hexKey, IV);
+                encryptionResult = CFB(hexInput, hexKey, IV, showWorkVal);
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
             }
             // else if: Option 5 (CTR)
             if (blockCipherChoice == "5" || blockCipherChoice == "CTR")
             {
                 encryptionOption = "CTR";
                 std::string hexInput = hexChoice();
-                encryptionResult = CTR(hexInput, hexKey, IV);
+                encryptionResult = CTR(hexInput, hexKey, IV, showWorkVal);
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
             }
-            // else if: Option 6 (Exit)
-            if (blockCipherChoice == "6" || blockCipherChoice == "EXIT")
+            // else if: Option 6 (Show work toggle)
+            if (blockCipherChoice == "6")
+            {
+                // std::cout << std::endl << "############################################################################" << std::endl;
+                showWorkVal = boolWorkChoice(showWorkVal);
+                if (!showWorkVal)
+                    showWorkString = "Disabled";
+                else if (showWorkVal)
+                    showWorkString = "Enabled";
+            }
+            // else if: Option 7 (Exit)
+            if (blockCipherChoice == "7" || blockCipherChoice == "EXIT")
             {
                 // To be further implemented
                 proceed = 0;
@@ -192,14 +220,12 @@ void menu()
             inputErrorMessage(0);                                                    // Outputs error message                                        
             goto userInput;
         }
-        std::cout << std::endl << "###################################################" << std::endl;
-        std::cout << std:: endl << encryptionOption << " result = " << encryptionResult << std::endl;
     }
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
+std::string ECB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
     std::cout << std::endl << std::endl;
     std::cout << "blockCipherChoice = ECB" << std::endl;
@@ -240,25 +266,28 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
     hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
     hexY2 = hexLCy2 + hexRCy2;
 
-    // boolWorkChoice();
 
-    std::cout << std::endl << "Y1:" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
-    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
-    std::cout << "Y1 = " << hexY1 << std::endl;
+    if (showWorkVal)
+    {
+        std::cout << std::endl << "Y1:" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+        std::cout << "Y1 = " << hexY1 << std::endl;
 
-    std::cout << std::endl << "Y2:" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl; 
-    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
-    std::cout << "Y2 = " << hexY2 << std::endl;
+        std::cout << std::endl << "Y2:" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl; 
+        std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+        std::cout << "Y2 = " << hexY2 << std::endl;
+    }
+
 
     hexECBresult = hexY1 + hexY2;
     return hexECBresult;
@@ -266,8 +295,9 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
+std::string CBC(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
+    std::cout << std::endl << std::endl;
     std::string binaryCBCresult;
     std::string hexCBCresult;
 
@@ -278,8 +308,6 @@ std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
 
-    std::string binaryECBresult;
-    std::string hexECBresult;
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
 
@@ -317,27 +345,30 @@ std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
     hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
     hexY2 = hexLCy2 + hexRCy2;
 
-    // boolWorkChoice();
 
-    std::cout << std::endl << "Y1:" << std::endl;
-    std::cout << "Y1 = e_" << hexKey << "(" << hexInput[0] << hexInput[1] << " xor " << IV << ")" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
-    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
-    std::cout << "Y1 = " << hexY1 << std::endl;
+    if (showWorkVal)
+    {
+        std::cout << std::endl << "Y1:" << std::endl;
+        std::cout << "Y1 = e_" << hexKey << "(" << hexInput[0] << hexInput[1] << " xor " << IV << ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+        std::cout << "Y1 = " << hexY1 << std::endl;
 
-    std::cout << std::endl << "Y2:" << std::endl;
-    std::cout << "Y2 = e_" << hexKey << "(" << hexInput[2] << hexInput[3] << " xor " << IV << ")" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
-    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
-    std::cout << "Y2 = " << hexY2 << std::endl;
+        std::cout << std::endl << "Y2:" << std::endl;
+        std::cout << "Y2 = e_" << hexKey << "(" << hexInput[2] << hexInput[3] << " xor " << IV << ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << hexLCy2 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+        std::cout << "Y2 = " << hexY2 << std::endl;
+    }
+
 
     hexCBCresult = hexY1 + hexY2;
     return hexCBCresult;
@@ -345,8 +376,9 @@ std::string CBC(std::string hexInput, std::string hexKey, std::string IV)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string OFB(std::string hexInput, std::string hexKey, std::string IV)
+std::string OFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {    
+    std::cout << std::endl << std::endl;
     std::string binaryOFBresult;
     std::string hexOFBresult;
 
@@ -357,8 +389,6 @@ std::string OFB(std::string hexInput, std::string hexKey, std::string IV)
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
 
-    std::string binaryECBresult;
-    std::string hexECBresult;
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
 
@@ -396,51 +426,197 @@ std::string OFB(std::string hexInput, std::string hexKey, std::string IV)
     secondHalf[1] = hexInput[3];
     hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
 
-    std::cout << std::endl << "S1:" << std::endl;
-    std::cout << "S1 = e_" << hexKey << "(" << IV << ")" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
-    std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
-    std::cout << "S1 = " << hexY1 << std::endl;
 
-    std::cout << std::endl << "S2:" << std::endl;
-    std::cout << "S2 = e_" << hexKey << "(" << hexLCy1 << hexRCy1 <<  ")" << std::endl;
-    std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
-    std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
-    std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
-    std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
-    std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << binary2Hex(binaryLCy2) << std::endl;
-    std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
-    std::cout << "S2 = " << hexY2 << std::endl;
+    if (showWorkVal)
+    {
+        std::cout << std::endl << "S1:" << std::endl;
+        std::cout << "S1 = e_" << hexKey << "(" << IV << ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+        std::cout << "S1 = " << hexY1 << std::endl;
 
+        std::cout << std::endl << "S2:" << std::endl;
+        std::cout << "S2 = e_" << hexKey << "(" << hexLCy1 << hexRCy1 <<  ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << binary2Hex(binaryLCy2) << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+        std::cout << "S2 = " << hexY2 << std::endl;
+    }
+
+
+    hexOFBresult = hexY1 + hexY2;
     return hexOFBresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CFB(std::string hexInput, std::string hexKey, std::string IV)
+std::string CFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
-    std::string CFBresult;
+    std::cout << std::endl << std::endl;
+    std::string hexCFBresult, binaryCFBresult;
 
     std::cout << "blockCipherChoice = CFB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
-    return CFBresult;
+    std::string binaryHexInput = hex2Binary(hexInput);
+    std::string binaryHexKey = hex2Binary(hexKey);
+    std::string binaryIV = hex2Binary(IV);
+
+    std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
+    std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
+
+    std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
+    std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
+
+    std::string LTRTxorY1, LTRTxorY2;
+    std::string firstHalf = "  ", secondHalf = "  ";
+
+    // Math for S1
+    hexLTy1 = IV[0];
+    hexRTy1 = IV[1];
+    hexLKy1 = hexKey[0];
+    hexRKy1 = hexKey[1];
+    binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
+    binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
+    hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
+    hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
+    hexY1 = hexLCy1 + hexRCy1;
+    firstHalf[0] = hexInput[0];
+    firstHalf[1] = hexInput[1];
+    hexY1 = binary2Hex(XOR(hex2Binary(hexY1), hex2Binary(firstHalf)));
+
+    // Math for S2
+    hexLTy2 = hexY1[0];
+    hexRTy2 = hexY1[1];
+    hexLKy2 = hexKey[0];
+    hexRKy2 = hexKey[1];
+    binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
+    binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
+    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    hexY2 = hexLCy2 + hexRCy2;
+    secondHalf[0] = hexInput[2];
+    secondHalf[1] = hexInput[3];
+    hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
+
+
+    if (showWorkVal)
+    {
+        std::cout << std::endl << "S1:" << std::endl;
+        std::cout << "S1 = e_" << hexKey << "(" << IV << ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+        std::cout << "S1 = " << hexLCy1 << "||" << hexRCy1 << " xor " << hexInput[0] << hexInput[1] << std::endl;
+        std::cout << "S1 = " << hexY1 << std::endl;
+
+        std::cout << std::endl << "S2:" << std::endl;
+        std::cout << "S2 = e_" << hexKey << "(" << hexY1[0] << hexY1[1] <<  ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << binary2Hex(binaryLCy2) << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+        std::cout << "S2 = " << hexLCy2 << "||" << hexRCy2 << " xor " << hexInput[2] << hexInput[3] << std::endl;
+        std::cout << "S2 = " << hexY2 << std::endl;
+    }
+
+
+    hexCFBresult = hexY1 + hexY2;
+    return hexCFBresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-std::string CTR(std::string hexInput, std::string hexKey, std::string IV)
+std::string CTR(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {   
-    std::string CTRresult;
+    std::cout << std::endl << std::endl;
+    std::string hexCTRresult, binaryCTRresult;
 
     std::cout << "blockCipherChoice = CTR" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
+    
+    std::string binaryHexInput = hex2Binary(hexInput);
+    std::string binaryHexKey = hex2Binary(hexKey);
+    std::string binaryIV = hex2Binary(IV);
 
-    return CTRresult;
+    std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
+    std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
+
+    std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
+    std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
+
+    std::string LTRTxorY1, LTRTxorY2;
+    std::string firstHalf = "  ", secondHalf = "  ";
+    
+    hexLTy1 = hexKey[1];
+    hexRTy1 = "1";
+    hexLKy1 = hexKey[0];
+    hexRKy1 = hexKey[1];
+    binaryLCy1 = XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1));
+    binaryRCy1 = XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1));
+    hexLCy1 = binary2Hex(XOR(hex2Binary(hexLKy1), hex2Binary(hexRTy1)));
+    hexRCy1 = binary2Hex(XOR(hex2Binary(hexRKy1), hex2Binary(hexLTy1)));
+    hexY1 = hexLCy1 + hexRCy1;
+    firstHalf[0] = hexInput[0];
+    firstHalf[1] = hexInput[1];
+    hexY1 = binary2Hex(XOR(hex2Binary(hexY1), hex2Binary(firstHalf)));
+
+    hexLTy2 = hexKey[1];
+    hexRTy2 = "2";
+    hexLKy2 = hexKey[0];
+    hexRKy2 = hexKey[1];
+    binaryLCy2 = XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2));
+    binaryRCy2 = XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2));
+    hexLCy2 = binary2Hex(XOR(hex2Binary(hexLKy2), hex2Binary(hexRTy2)));
+    hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
+    hexY2 = hexLCy2 + hexRCy2;
+    secondHalf[0] = hexInput[2];
+    secondHalf[1] = hexInput[3];
+    binaryY2 = hex2Binary(hexY2);
+    hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
+
+
+    if (showWorkVal)
+    {
+        std::cout << std::endl << "Y1:" << std::endl;
+        std::cout << "Y1 = e_" << hexKey << "(" << IV << ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy1) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy1) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy1) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy1) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy1 << " = " << hexLCy1 << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy1 << " = " << hexRCy1 << std::endl;
+        std::cout << "Y1 = " << hexLCy1 << "||" << hexRCy1 << " xor " << hexInput[0] << hexInput[1] << std::endl;
+        std::cout << "Y1 = " << hexY1 << std::endl;
+
+        std::cout << std::endl << "Y2:" << std::endl;
+        std::cout << "Y2 = e_" << hexKey << "(" << hexY1[0] << hexY1[1] <<  ")" << std::endl;
+        std::cout << "LT = " << hex2Binary(hexLTy2) << std::endl;
+        std::cout << "RT = " << hex2Binary(hexRTy2) << std::endl;
+        std::cout << "LK = " << hex2Binary(hexLKy2) << std::endl;
+        std::cout << "RK = " << hex2Binary(hexRKy2) << std::endl;
+        std::cout << "LC = LK xor RT = " << binaryLCy2 << " = " << binary2Hex(binaryLCy2) << std::endl;
+        std::cout << "RC = RK xor LT = " << binaryRCy2 << " = " << hexRCy2 << std::endl;
+        std::cout << "Y2 = " << hexLCy2 << "||" << hexRCy2 << " xor " << hexInput[2] << hexInput[3] << std::endl;
+        std::cout << "Y2 = " << hexY2 << std::endl;
+    }
+
+
+    hexCTRresult = hexY1 + hexY2;
+
+    return hexCTRresult;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -701,7 +877,7 @@ std::string hexChoice()
 
     std::vector<std::string> hexInputVector = {"", "", "", ""}; 
 
-    std::cout << std::endl << "Enter four hex values to be used as the 16-bit input: ";
+    std::cout << "Enter four hex values to be used as the 16-bit input: ";
     std::cin >> hexValue;
 
     // Loops through each character of "hexValue" to make sure that the std::string is capatilized 
@@ -787,11 +963,12 @@ std::string hexChoice()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
+// Originally I wanted to implement this, but ultimately decided against it because it felt like too much menu navigation.
 bool continueMenu()
 {
     continueChoiceInput:
     std::string continueChoice;
-    std::cout << "Would you like work to be shown? (Y/N): ";
+    std::cout << "Would you like to continue? (Y/N): ";
     std::cin >> continueChoice;
 
     if (continueChoice.size() == 1 && (toupper(continueChoice[0]) == 'Y' || toupper(continueChoice[0] == 'N')))
@@ -813,20 +990,41 @@ bool continueMenu()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-bool boolWorkChoice()
+bool boolWorkChoice(bool showWorkVal)
 {
+    std::string showWorkStatus;
+
+    if (!showWorkVal)
+        showWorkStatus = "Disabled";
+    else
+        showWorkStatus = "Enabled";
+
     workChoiceInput:
+
+    std::cout << "Current work status: " << showWorkStatus << std::endl;
+    std::cout << "Change? (Y/N): ";
     std::string workChoice;
-    std::cout << "Would you like work to be shown? (Y/N): ";
     std::cin >> workChoice;
 
-    if (workChoice.size() == 1 && (toupper(workChoice[0]) == 'Y' || toupper(workChoice[0] == 'N')))
+    workChoice[0] = toupper(workChoice[0]);
+
+
+    if (toupper(workChoice == "Y" || toupper(workChoice == "N")))
     {
         if (workChoice == "Y")
-            return true;
-        else
-            return false;
-
+        {
+            if (!showWorkVal)
+            {
+                showWorkVal = true;
+                return true;
+            }
+            else 
+                return false;
+        }
+        else if (workChoice == "N")
+        {
+            return showWorkVal;
+        }
     }
     // If "workChoice" does not fit within the specified parameters above, execute "inputErrorMessage" function and jump to "workChoiceInput".
     else
@@ -838,9 +1036,3 @@ bool boolWorkChoice()
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-void showWork(std::string blockCipherType)
-{
-
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
