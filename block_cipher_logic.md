@@ -1,5 +1,5 @@
 ECB:  
-	y_1: 
+	y_1:   
 		• y_1 = e_[8-bit key] [First two hex values of 16-bit input] 
 		• LT = [1st character of 16-bit input]  
 		• RT = [2nd character of 16-bit input]  
