@@ -23,7 +23,6 @@
 
 ## CLI Menu Tree:  
 
-
 ### “Pick a number:”  
 ### 1. Electronic Code Book (ECB)  
 - Prompt user for hex values  
@@ -56,3 +55,5 @@
 
 ### 7. Exit
 
+## Block Cipher Logic
+[Click here to view the logic of the block ciphers](block_cipher_logic.md)
