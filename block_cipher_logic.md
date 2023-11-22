@@ -28,7 +28,7 @@ CBC:
 		• RK = [2nd character of 8-bit key]   
 		• LC = LK xor RT  
 		• RC = RK xor LT  
-		• y_1 = LC||RC  
+		• y_1 = LC||RC    
 	y_2:  
 		• y_2 = e_[8-bit key] [{Last two hex values of 16-bit input} xor {y_1}]  
 		• LT = [3rd character of 16-bit input] xor [1st character of y_1]   
