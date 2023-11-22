@@ -9,7 +9,7 @@
 
 ## 3. Verify that 'make' is installed and properly up to date within your Linux/Unix distro. 
 - If 'make' is not yet installed your Unix distro, you can simply run this command   
-`sudo apt update; sudo apt upgrade -y; sudo apt install make`
+`apt install make`
 
 ## 4. Run the 'make' command
 `make`
