@@ -7,9 +7,6 @@
 > Semester: Fall 2023  
 > Professor: Dr. Charles Cartledge  
 
-## Instructions
-[Click here to view instructions](instructions.md)
-
 ## Description 
 ### Project Proposal:
 
@@ -57,3 +54,6 @@
 
 ## Block Cipher Logic
 [Click here to view the logic of the block ciphers](block_cipher_logic.md)
+
+## Instructions
+[Click here to view instructions](instructions.md)
