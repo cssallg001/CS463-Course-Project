@@ -56,4 +56,4 @@
 [Click here to view the block cipher logic](block_cipher_logic.md)
 
 ## Instructions
-[Click here to view instructions](instructions.md)
+[Click here to view the instructions](instructions.md)
