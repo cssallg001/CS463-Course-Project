@@ -32,7 +32,7 @@ std::string CTR(std::string hexInput, std::string hexKey, std::string IV, bool s
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-main()
+int main()
 {
     menu();
     std::cout << std::endl << std::endl << "Ending..." << std::endl << std::endl; 
