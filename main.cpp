@@ -226,20 +226,19 @@ void menu()
 
 std::string ECB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
+    // Message to tell user which option had been picked
     std::cout << std::endl << std::endl;
     std::cout << "blockCipherChoice = ECB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
-
+    // Declaring variables to be used by the math
     std::string binaryHexInput = hex2Binary(hexInput);
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
-
     std::string binaryECBresult;
     std::string hexECBresult;
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
-
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
 
@@ -296,23 +295,21 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV, bool s
 
 std::string CBC(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
+    // Message to tell user which option had been picked
     std::cout << std::endl << std::endl;
-    std::string binaryCBCresult;
-    std::string hexCBCresult;
-
     std::cout << "blockCipherChoice = CBC" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
+    // Declaring variables to be used by the math
+    std::string binaryCBCresult;
+    std::string hexCBCresult;
     std::string binaryHexInput = hex2Binary(hexInput);
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
-
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
-
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
-
     std::string LTRTxorY1, LTRTxorY2;
     std::string firstHalf = "  ", secondHalf = "  ";
 
@@ -377,23 +374,21 @@ std::string CBC(std::string hexInput, std::string hexKey, std::string IV, bool s
 
 std::string OFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {    
+    // Message to tell user which option had been picked
     std::cout << std::endl << std::endl;
-    std::string binaryOFBresult;
-    std::string hexOFBresult;
-
     std::cout << "blockCipherChoice = OFB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
-
+    
+    // Declaring variables to be used by the math
+    std::string binaryOFBresult;
+    std::string hexOFBresult;
     std::string binaryHexInput = hex2Binary(hexInput);
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
-
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
-
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
-
     std::string LTRTxorY1, LTRTxorY2;
     std::string firstHalf = "  ", secondHalf = "  ";
 
@@ -458,22 +453,20 @@ std::string OFB(std::string hexInput, std::string hexKey, std::string IV, bool s
 
 std::string CFB(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {
+    // Message to tell user which option had been picked
     std::cout << std::endl << std::endl;
-    std::string hexCFBresult, binaryCFBresult;
-
     std::cout << "blockCipherChoice = CFB" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
 
+    // Declaring variables to be used by the math
+    std::string hexCFBresult, binaryCFBresult;
     std::string binaryHexInput = hex2Binary(hexInput);
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
-
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
-
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
-
     std::string LTRTxorY1, LTRTxorY2;
     std::string firstHalf = "  ", secondHalf = "  ";
 
@@ -540,22 +533,20 @@ std::string CFB(std::string hexInput, std::string hexKey, std::string IV, bool s
 
 std::string CTR(std::string hexInput, std::string hexKey, std::string IV, bool showWorkVal)
 {   
+    // Message to tell user which option had been picked
     std::cout << std::endl << std::endl;
-    std::string hexCTRresult, binaryCTRresult;
-
     std::cout << "blockCipherChoice = CTR" << std::endl;
     std::cout << "hexInput = " << hexInput << std::endl;
     
+    // Declaring variables to be used by the math
+    std::string hexCTRresult, binaryCTRresult;
     std::string binaryHexInput = hex2Binary(hexInput);
     std::string binaryHexKey = hex2Binary(hexKey);
     std::string binaryIV = hex2Binary(IV);
-
     std::string binaryLTy1, binaryRTy1, binaryLKy1, binaryRKy1, binaryLCy1, binaryRCy1, binaryY1;
     std::string hexLTy1, hexRTy1, hexLKy1, hexRKy1, hexLCy1, hexRCy1, hexY1;
-
     std::string binaryLTy2, binaryRTy2, binaryLKy2, binaryRKy2, binaryLCy2, binaryRCy2, binaryY2;
     std::string hexLTy2, hexRTy2, hexLKy2, hexRKy2, hexLCy2, hexRCy2, hexY2;
-
     std::string LTRTxorY1, LTRTxorY2;
     std::string firstHalf = "  ", secondHalf = "  ";
     
