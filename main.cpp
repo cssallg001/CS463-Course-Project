@@ -1022,7 +1022,7 @@ bool boolWorkChoice(bool showWorkVal)
         }
         else if (workChoice == "N")
         {
-            return showWorkVal;
+            return false;
         }
     }
     // If "workChoice" does not fit within the specified parameters above, execute "inputErrorMessage" function and jump to "workChoiceInput".
@@ -1031,7 +1031,11 @@ bool boolWorkChoice(bool showWorkVal)
         inputErrorMessage(0);                                                    // Outputs error message                                        
         goto workChoiceInput;
     }
+	return false;
 }
+
+
+
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
