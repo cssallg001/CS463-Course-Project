@@ -7,9 +7,6 @@
 > Semester: Fall 2023  
 > Professor: Dr. Charles Cartledge  
 
-## Instructions
-[Click here to view instructions](instructions.md)
-
 ## Description 
 ### Project Proposal:
 
@@ -22,7 +19,6 @@
 (Note: Haven’t decided yet whether or not these two sets of hex values will remain static or if the user will be prompted to input the values instead.)  
 
 ## CLI Menu Tree:  
-
 
 ### “Pick a number:”  
 ### 1. Electronic Code Book (ECB)  
@@ -50,5 +46,14 @@
 - Output Result of CTR  
 - “Continue? [Y / N]”  
 
-### 6. Exit
+### 6. Toggle Work
+- Disabled (Default) - Hides the math of the cipher blocks
+- Enabled: Shows the math of the cipher blocks 
 
+### 7. Exit
+
+## Block Cipher Logic
+[Click here to view the block cipher logic](block_cipher_logic.md)
+
+## Instructions
+[Click here to view the instructions](instructions.md)

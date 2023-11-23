@@ -2,7 +2,7 @@
  
 ## 1. Open a Linux/Unix terminal on your machine and run the command  
 `git clone https://github.com/cssallg001/CS463-Course-Project.git`
-- This will cause the repository to be cloned to the current directory of your local machine. 
+- That will cause this repository to be cloned to the current directory of your local machine. 
 
 ## 2. Use the 'cd' command to change your directory to inside of the cloned repository
 `cd CS463-Course-Project/`
