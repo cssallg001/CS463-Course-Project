@@ -265,7 +265,7 @@ std::string ECB(std::string hexInput, std::string hexKey, std::string IV, bool s
     hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
     hexY2 = hexLCy2 + hexRCy2;
 
-
+	// If showWorkVal is true, display math for ECB
     if (showWorkVal)
     {
         std::cout << std::endl << "Y1:" << std::endl;
@@ -344,7 +344,7 @@ std::string CBC(std::string hexInput, std::string hexKey, std::string IV, bool s
     hexRCy2 = binary2Hex(XOR(hex2Binary(hexRKy2), hex2Binary(hexLTy2)));
     hexY2 = hexLCy2 + hexRCy2;
 
-
+	// If showWorkVal is true, display math for CBC
     if (showWorkVal)
     {
         std::cout << std::endl << "Y1:" << std::endl;
@@ -425,7 +425,7 @@ std::string OFB(std::string hexInput, std::string hexKey, std::string IV, bool s
     secondHalf[1] = hexInput[3];
     hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
 
-
+	// If showWorkVal is true, display math for OFB
     if (showWorkVal)
     {
         std::cout << std::endl << "S1:" << std::endl;
@@ -505,7 +505,7 @@ std::string CFB(std::string hexInput, std::string hexKey, std::string IV, bool s
     secondHalf[1] = hexInput[3];
     hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
 
-
+	// If showWorkVal is true, display math for CFB
     if (showWorkVal)
     {
         std::cout << std::endl << "S1:" << std::endl;
@@ -586,7 +586,7 @@ std::string CTR(std::string hexInput, std::string hexKey, std::string IV, bool s
     binaryY2 = hex2Binary(hexY2);
     hexY2 = binary2Hex(XOR(hex2Binary(hexY2), hex2Binary(secondHalf)));
 
-
+	// If showWorkVal is true, display math for CTR
     if (showWorkVal)
     {
         std::cout << std::endl << "Y1:" << std::endl;
