@@ -7,9 +7,11 @@
 ## 2. Use the 'cd' command to change your directory to inside of the cloned repository
 `cd CS463-Course-Project/`
 
-## 3. Verify that 'make' is installed and properly up to date within your Linux/Unix distro. 
+## 3. Verify that 'make' and 'g++' is installed and properly up to date within your Linux/Unix distro. 
 - If 'make' is not yet installed your Unix distro, you can simply run this command   
 `apt install make`
+- If 'g++' is not yet installed your Unix distro, you can simply run this command  
+`apt install g++`
 
 ## 4. Run the 'make' command
 `make`
