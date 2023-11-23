@@ -47,7 +47,7 @@
 - “Continue? [Y / N]”  
 
 ### 6. Toggle Work
-- Disabled (Default) - Hides the math of the cipher blocks
+- Disabled (Default): Hides the math of the cipher blocks
 - Enabled: Shows the math of the cipher blocks 
 
 ### 7. Exit
